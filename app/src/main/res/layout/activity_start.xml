@@ -10,7 +10,7 @@ android:layout_height="fill_parent" >
 
 
     <Button
-            android:id="@+id/btn_draw_State"
+            android:id="@+id/btnFav"
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:layout_marginTop="60dp"
@@ -23,13 +23,13 @@ android:layout_height="fill_parent" >
             android:layout_marginEnd="20dp" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btnRefresh"
         android:layout_width="45dp"
         android:layout_height="45dp"
         android:text="R"
         android:onClick="refresh"
-        android:layout_below="@+id/btn_draw_State"
-        android:layout_alignRight="@+id/btn_draw_State"
-        android:layout_alignEnd="@+id/btn_draw_State" />
+        android:layout_below="@+id/btnFav"
+        android:layout_alignRight="@+id/btnFav"
+        android:layout_alignEnd="@+id/btnFav" />
 
 </RelativeLayout>

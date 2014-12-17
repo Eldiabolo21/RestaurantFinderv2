@@ -1,0 +1,11 @@
+<resources>
+
+    <string name="app_name">RestaurantFinder</string>
+    <string name="action_settings">Einstellungen</string>
+    <string name="addFav">Zu den Favoriten</string>
+    <string name="calcRoute">Route berechnen</string>
+    <string name="remFav">Aus Favoriten entfernen</string>
+    <string name="title_activity_detail_view">DetailView</string>
+    <string name="title_activity_favorites">Favoriten</string>
+
+</resources>

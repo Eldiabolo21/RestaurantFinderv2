@@ -57,12 +57,24 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Zu den Favoriten"
-        android:id="@+id/setFavourite"
+        android:id="@+id/setFavorite"
         android:layout_below="@+id/addressText"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginTop="57dp"
         android:layout_alignRight="@+id/cityText"
         android:layout_alignEnd="@+id/cityText"
-        android:onClick="setFavourite" />
+        android:onClick="setFavorite" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/calcRoute"
+        android:id="@+id/btnRoute"
+        android:layout_below="@+id/setFavorite"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/setFavorite"
+        android:layout_alignEnd="@+id/setFavorite"
+        android:onClick="showRoute" />
 </RelativeLayout>

@@ -1,6 +1,7 @@
 package mobappdev.fhj.at.restaurantfinder;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -9,27 +10,27 @@ import android.widget.TextView;
 
 public class DetailView extends Activity {
 
-    FavouriteStorage favouriteStorage;
+    FavoriteStorage favoriteStorage;
     Restaurant restaurant;
-    Button setFavouriteButton;
+    Button setFavoriteButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_view);
 
-        favouriteStorage = new FavouriteStorage(getBaseContext());
+        favoriteStorage = new FavoriteStorage(getBaseContext());
 
         TextView name, url, address, city;
-        setFavouriteButton = (Button)findViewById(R.id.setFavourite);
+        setFavoriteButton = (Button)findViewById(R.id.setFavorite);
 
         Bundle b = getIntent().getExtras();
         restaurant = (Restaurant)b.getSerializable("restaurant");
 
-        if(favouriteStorage.isFavourite(restaurant)) {
-            setFavouriteButton.setText("REMOVE");
+        if(favoriteStorage.isFavorite(restaurant)) {
+            setFavoriteButton.setText(getString(R.string.remFav));
         } else {
-            setFavouriteButton.setText("ADD");
+            setFavoriteButton.setText(getString(R.string.addFav));
         }
 
         name = (TextView)findViewById(R.id.nameText);
@@ -43,14 +44,20 @@ public class DetailView extends Activity {
         city.setText(restaurant.getCity());
     }
 
-    public void setFavourite(View v) {
-        if(favouriteStorage.isFavourite(restaurant)) {
-            favouriteStorage.remove(restaurant);
-            setFavouriteButton.setText("ADD");
+    public void setFavorite(View v) {
+        if(favoriteStorage.isFavorite(restaurant)) {
+            favoriteStorage.remove(restaurant);
+            setFavoriteButton.setText(getString(R.string.addFav));
         } else {
-            favouriteStorage.add(restaurant);
-            setFavouriteButton.setText("REMOVE");
+            favoriteStorage.add(restaurant);
+            setFavoriteButton.setText(getString(R.string.remFav));
         }
+    }
+
+    public void showRoute(View v) {
+        Intent result = new Intent();
+        setResult(1, result);
+        finish();
     }
 
 }
