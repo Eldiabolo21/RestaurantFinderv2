@@ -131,7 +131,6 @@ public class StartActivity extends Activity implements GoogleMap.OnMarkerClickLi
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Log.v("xx", requestCode+" "+resultCode);
         if(resultCode == 1) {
             drawRoute(new LatLng(currentRestaurant.getLat(), currentRestaurant.getLng()));
         }
