@@ -34,7 +34,7 @@
             android:value="AIzaSyA4hMgwerLpZRb5fwIZr8VYW-iy1O3BvdA" />
 
         <activity
-            android:name=".Favorites"
+            android:name=".Favourites"
             android:label="@string/title_activity_favorites" >
         </activity>
         <activity

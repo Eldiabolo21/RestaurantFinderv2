@@ -28,12 +28,14 @@ import java.util.List;
 import java.util.Map;
 
 
-public class StartActivity extends Activity implements GoogleMap.OnMarkerClickListener, View.OnClickListener, AsyncResponse, LocationListener {
+public class StartActivity extends Activity implements GoogleMap.OnMarkerClickListener, AsyncResponse, LocationListener {
 
     GoogleMap googleMap;
     List<Restaurant> restaurantList;
     Map<String, Marker> markers;
     LocationManager locationManager;
+    boolean refresh;
+    FavouriteStorage favouriteStorage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +43,9 @@ public class StartActivity extends Activity implements GoogleMap.OnMarkerClickLi
 
         restaurantList = new ArrayList<Restaurant>();
         markers = new HashMap<String, Marker>();
+        refresh = true;
+        favouriteStorage = new FavouriteStorage(getBaseContext());
+
 
         // Enables Internet tasks in the main thread
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -52,16 +57,13 @@ public class StartActivity extends Activity implements GoogleMap.OnMarkerClickLi
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 400, 1, this);
+
         if (location != null)
             onLocationChanged(location);
         else
             Toast.makeText(getBaseContext(), "Location can't be retrieved", Toast.LENGTH_SHORT).show();
 
     }
-
-    /*
-
-     */
 
     private void createMapView() {
         try {
@@ -88,7 +90,7 @@ public class StartActivity extends Activity implements GoogleMap.OnMarkerClickLi
     @Override
     public boolean onMarkerClick(final Marker marker) {
         for (Restaurant r : restaurantList) {
-            if (markers.containsKey(r.getId())) {
+            if (markers.get(r.getId()).equals(marker)) {
                 Intent i = new Intent(this, DetailView.class);
                 Bundle b = new Bundle();
                 b.putSerializable("restaurant", r);
@@ -98,14 +100,21 @@ public class StartActivity extends Activity implements GoogleMap.OnMarkerClickLi
             }
         }
 
-
         return false;
     }
 
-    @Override
-    public void onClick(View view) {
-        Intent i = new Intent(this, Favorites.class);
-        startActivity(i);
+    public void showFavourites(View view) {
+        googleMap.clear();
+        markers.clear();
+        restaurantList = favouriteStorage.getFavourites();
+        for(Restaurant r : restaurantList) {
+            addMarker(r);
+        }
+    }
+
+    public void refresh(View view) {
+        refresh = true;
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 400, 1, this);
     }
 
     @Override
@@ -115,18 +124,17 @@ public class StartActivity extends Activity implements GoogleMap.OnMarkerClickLi
             JSONArray jsonObjects = response.getJSONObject("response").getJSONArray("venues");
             for (int i = 0; i < jsonObjects.length(); i++) {
                 JSONObject restaurantJSON = jsonObjects.getJSONObject(i);
-                Restaurant restaurant = new Restaurant(restaurantJSON.getString("id"), restaurantJSON.getString("name"), restaurantJSON.getJSONObject("location").getDouble("lat"), restaurantJSON.getJSONObject("location").getDouble("lng"));
+                Restaurant restaurant = new Restaurant(restaurantJSON.toString());
                 restaurantList.add(restaurant);
                 addMarker(restaurant);
             }
-
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
 
     private void addMarker(Restaurant restaurant) {
-        if (null != googleMap) {
+        if (googleMap != null) {
             markers.put(restaurant.getId(),
                     googleMap.addMarker(new MarkerOptions()
                             .position(new LatLng(restaurant.getLat(), restaurant.getLng()))
@@ -134,18 +142,19 @@ public class StartActivity extends Activity implements GoogleMap.OnMarkerClickLi
                             .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)))
             );
 
+        } else {
         }
     }
 
     @Override
     public void onLocationChanged(Location location) {
-        if (location != null) {
+        if (location != null && refresh) {
+            refresh = false;
+            restaurantList = new ArrayList<Restaurant>();
             getRestaurants(new LatLng(location.getLatitude(), location.getLongitude()));
             LatLng myLocation = new LatLng(location.getLatitude(), location.getLongitude());
             CameraUpdate yourLocation = CameraUpdateFactory.newLatLngZoom(myLocation, 12);
             googleMap.animateCamera(yourLocation);
-        } else {
-            Toast.makeText(getBaseContext(), "Location can't be retrieved", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -163,4 +172,5 @@ public class StartActivity extends Activity implements GoogleMap.OnMarkerClickLi
     public void onProviderDisabled(String s) {
 
     }
+
 }

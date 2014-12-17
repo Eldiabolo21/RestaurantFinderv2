@@ -9,17 +9,27 @@ android:layout_height="fill_parent" >
     android:layout_height="match_parent"/>
 
 
-        <Button
+    <Button
             android:id="@+id/btn_draw_State"
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:layout_marginTop="60dp"
             android:layout_marginRight="10dp"
             android:text="F"
-            android:onClick="onClick"
+            android:onClick="showFavourites"
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="20dp" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:text="R"
+        android:onClick="refresh"
+        android:layout_below="@+id/btn_draw_State"
+        android:layout_alignRight="@+id/btn_draw_State"
+        android:layout_alignEnd="@+id/btn_draw_State" />
 
 </RelativeLayout>
