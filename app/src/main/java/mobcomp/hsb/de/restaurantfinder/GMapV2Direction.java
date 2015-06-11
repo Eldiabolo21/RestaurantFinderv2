@@ -1,4 +1,4 @@
-package restaurantfinder;
+package mobcomp.hsb.de.restaurantfinder;
 
 import android.util.Log;
 

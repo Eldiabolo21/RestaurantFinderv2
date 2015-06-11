@@ -1,4 +1,4 @@
-package restaurantfinder;
+package mobcomp.hsb.de.restaurantfinder;
 
 import org.json.JSONException;
 import org.json.JSONObject;

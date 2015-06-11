@@ -1,4 +1,4 @@
-package restaurantfinder;
+package mobcomp.hsb.de.restaurantfinder;
 
 /**
  * Created by hannesfeichtl on 12.12.14.
