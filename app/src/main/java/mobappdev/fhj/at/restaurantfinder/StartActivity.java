@@ -43,6 +43,7 @@ public class StartActivity extends Activity implements GoogleMap.OnMarkerClickLi
     FavoriteStorage favoriteStorage;
     LatLng currentPosition;
     //Testcomment to add to GIT
+    //Nochmehr Kommentar
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
