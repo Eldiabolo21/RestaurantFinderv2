@@ -1,13 +1,10 @@
-package mobappdev.fhj.at.restaurantfinder;
+package restaurantfinder;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.Serializable;
 
-/**
- * Created by hannesfeichtl on 12.12.14.
- */
 public class Restaurant implements Serializable {
 
     String id;

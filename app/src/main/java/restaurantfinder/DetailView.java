@@ -1,4 +1,4 @@
-package mobappdev.fhj.at.restaurantfinder;
+package restaurantfinder;
 
 import android.app.Activity;
 import android.content.Intent;

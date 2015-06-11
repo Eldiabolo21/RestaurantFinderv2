@@ -1,4 +1,4 @@
-package mobappdev.fhj.at.restaurantfinder;
+package restaurantfinder;
 
 import android.os.AsyncTask;
 

@@ -1,4 +1,4 @@
-package mobappdev.fhj.at.restaurantfinder;
+package restaurantfinder;
 
 /**
  * Created by hannesfeichtl on 12.12.14.
