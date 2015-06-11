@@ -1,4 +1,4 @@
-package restaurantfinder;
+package mobcomp.hsb.de.restaurantfinder;
 
 import android.app.Activity;
 import android.content.Context;
