@@ -13,9 +13,6 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-/**
- * Created by hannesfeichtl on 03.12.14.
- */
 public class FinderTask extends AsyncTask<String, String, String> {
 
     protected AsyncResponse delegate=null;

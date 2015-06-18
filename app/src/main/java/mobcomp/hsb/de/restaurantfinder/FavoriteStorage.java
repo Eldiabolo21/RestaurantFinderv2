@@ -7,9 +7,6 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.Map;
 
-/**
- * Created by hannesfeichtl on 16.12.14.
- */
 public class FavoriteStorage {
 
     private static final String MY_PREFS = "my_prefs";
