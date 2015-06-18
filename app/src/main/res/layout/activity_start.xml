@@ -10,17 +10,17 @@ android:layout_height="fill_parent" >
 
 
     <Button
-            android:id="@+id/btnFav"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:layout_marginTop="60dp"
-            android:layout_marginRight="10dp"
-            android:text="F"
-            android:onClick="showFavorites"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="20dp" />
+        android:id="@+id/btnFav"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginRight="10dp"
+        android:text="F"
+        android:onClick="showFavorites"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="20dp" />
 
     <Button
         android:id="@+id/btnRefresh"

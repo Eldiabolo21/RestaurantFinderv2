@@ -59,5 +59,4 @@ public class DetailView extends Activity {
         setResult(1, result);
         finish();
     }
-
 }

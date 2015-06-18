@@ -45,8 +45,6 @@ public class StartActivity extends Activity implements GoogleMap.OnMarkerClickLi
     boolean refresh, favoritesActive;
     FavoriteStorage favoriteStorage;
     LatLng currentPosition;
-    //Testcomment to add to GIT
-    //Nochmehr Kommentar
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -165,6 +163,7 @@ public class StartActivity extends Activity implements GoogleMap.OnMarkerClickLi
     public void refresh(View view) {
         refresh = true;
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 400, 1, this);
+        Log.i("Button pressed", "Bla");
     }
 
 
