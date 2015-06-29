@@ -45,6 +45,7 @@ public class StartActivity extends Activity implements GoogleMap.OnMarkerClickLi
     boolean refresh, favoritesActive;
     FavoriteStorage favoriteStorage;
     LatLng currentPosition;
+    //Testcomment :)
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
