@@ -1,6 +1,9 @@
 package mobcomp.hsb.de.restaurantfinder;
 
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -9,6 +12,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -142,6 +146,32 @@ public class StartActivity extends Activity implements GoogleMap.OnMarkerClickLi
 
     public void showFavorites(View view) {
         Button typeButton = (Button) findViewById(R.id.btnFav);
+        //new Notification
+/*        NotificationCompat.Builder mBuilder =
+                new NotificationCompat.Builder(this)
+                        .setSmallIcon(R.drawable.common_signin_btn_icon_dark)
+                        .setContentTitle("My notification")
+                        .setContentText("Hello World!");
+
+*//*        Intent resultIntent = new Intent(this, ResultActivity.class);
+        // Because clicking the notification opens a new ("special") activity, there's
+        // no need to create an artificial back stack.
+        PendingIntent resultPendingIntent =
+                PendingIntent.getActivity(
+                        this,
+                        0,
+                        resultIntent,
+                        PendingIntent.FLAG_UPDATE_CURRENT
+                );*//*
+        //NotificationCompat.Builder mBuilder;
+        // Sets an ID for the notification
+        //int mNotificationId = 001;
+        // Gets an instance of the NotificationManager service
+        NotificationManager mNotifyMgr =
+                (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        // Builds the notification and issues it.
+        mNotifyMgr.notify(mNotificationId, mBuilder.build());*/
+
         if (favoritesActive) {
             restaurantList = nearRestaurants;
             typeButton.setText("F");
@@ -151,6 +181,13 @@ public class StartActivity extends Activity implements GoogleMap.OnMarkerClickLi
         }
         drawMarkers();
         favoritesActive = !favoritesActive;
+    }
+
+    private void handleNotification() {
+        Intent alarmIntent = new Intent(this, AlarmReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 5000, pendingIntent);
     }
 
     public void drawMarkers() {
@@ -164,7 +201,6 @@ public class StartActivity extends Activity implements GoogleMap.OnMarkerClickLi
     public void refresh(View view) {
         refresh = true;
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 400, 1, this);
-        Log.i("Button pressed", "Bla");
     }
 
 

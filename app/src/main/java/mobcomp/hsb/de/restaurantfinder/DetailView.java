@@ -1,11 +1,17 @@
 package mobcomp.hsb.de.restaurantfinder;
 
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import java.util.Calendar;
+import java.util.Date;
 
 
 public class DetailView extends Activity {
@@ -51,6 +57,16 @@ public class DetailView extends Activity {
         } else {
             favoriteStorage.add(restaurant);
             setFavoriteButton.setText(getString(R.string.remFav));
+            Log.d("Favorite", "Favorite");
+            //TODO set timer for 30 Days to as Reminder
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(new Date());
+            Intent activate = new Intent(this, AlarmReceiver.class);
+            AlarmManager alarms ;
+            PendingIntent alarmIntent = PendingIntent.getBroadcast(this, 0, activate, 0);
+            alarms = (AlarmManager) getSystemService(ALARM_SERVICE);
+            alarms.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis() + 10000, alarmIntent);
+
         }
     }
 
