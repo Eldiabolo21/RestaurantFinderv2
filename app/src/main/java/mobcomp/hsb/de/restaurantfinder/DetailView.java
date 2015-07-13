@@ -31,7 +31,11 @@ public class DetailView extends Activity {
         setFavoriteButton = (Button)findViewById(R.id.setFavorite);
 
         Bundle b = getIntent().getExtras();
-        restaurant = (Restaurant)b.getSerializable("restaurant");
+        if (b == null) {
+            restaurant = (Restaurant) savedInstanceState.getSerializable("restaurant");
+        } else{
+                restaurant = (Restaurant) b.getSerializable("restaurant");
+        }
 
         if(favoriteStorage.isFavorite(restaurant)) {
             setFavoriteButton.setText(getString(R.string.remFav));
@@ -62,8 +66,15 @@ public class DetailView extends Activity {
             Calendar cal = Calendar.getInstance();
             cal.setTime(new Date());
             Intent activate = new Intent(this, AlarmReceiver.class);
+            Bundle b = new Bundle();
+            b.putSerializable("restaurant", restaurant);
+            activate.putExtras(b);
+            activate.setAction("restaurant");
+            activate.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            //activate.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
             AlarmManager alarms ;
             PendingIntent alarmIntent = PendingIntent.getBroadcast(this, 0, activate, 0);
+            //resultIntent.setFlags(Intent.;
             alarms = (AlarmManager) getSystemService(ALARM_SERVICE);
             alarms.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis() + 10000, alarmIntent);
 

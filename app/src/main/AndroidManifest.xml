@@ -40,8 +40,7 @@
             android:name=".DetailView"
             android:label="@string/title_activity_detail_view" >
         </activity>
-        <service android:name=".MyAlarmService"
-            android:enabled="true" />
+        <service android:enabled="true" android:name=".BGService" />
 
         <receiver android:name=".AlarmReceiver"/>
     </application>

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -78,7 +79,7 @@ public class StartActivity extends Activity implements GoogleMap.OnMarkerClickLi
             onLocationChanged(location);
         else
             Toast.makeText(getBaseContext(), "Location can't be retrieved", Toast.LENGTH_SHORT).show();
-
+        startService(new Intent(this, BGService.class));
     }
 
     private void createMapView() {
