@@ -82,6 +82,7 @@ public class StartActivity extends Activity implements GoogleMap.OnMarkerClickLi
         startService(new Intent(this, BGService.class));
     }
 
+    // erstellt die MapView
     private void createMapView() {
         try {
             if (null == googleMap) {
@@ -98,12 +99,14 @@ public class StartActivity extends Activity implements GoogleMap.OnMarkerClickLi
         }
     }
 
+    // laedt die Restaurants von der foursquare Seite in die App mit Hilfe des FinderTask
     private void getRestaurants(LatLng latLng) {
         FinderTask request = new FinderTask();
         request.setDelegate(this);
         request.execute("https://api.foursquare.com/v2/venues/search?ll=" + latLng.latitude + "," + latLng.longitude + "&query=restaurant&oauth_token=NLHPJPLVI4UB2RZMEKV3D34NVLDHOIUUAUUTLR3UDKM1HQPM&v=20141203");
     }
 
+    // zeichnet die Route zwischen der akutellen Position und dem gewaehlten Restaurant
     public void drawRoute(LatLng position) {
         googleMap.clear();
 
@@ -122,6 +125,7 @@ public class StartActivity extends Activity implements GoogleMap.OnMarkerClickLi
         googleMap.addMarker(new MarkerOptions().position(position).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
     }
 
+    // oeffnet die Detailview eines Restaurants, bei Klick
     @Override
     public boolean onMarkerClick(final Marker marker) {
         for (Restaurant r : restaurantList) {
@@ -145,6 +149,7 @@ public class StartActivity extends Activity implements GoogleMap.OnMarkerClickLi
         }
     }
 
+    // zeigt alle favorisierten Restaurants auf der Map
     public void showFavorites(View view) {
         Button typeButton = (Button) findViewById(R.id.btnFav);
         //new Notification
@@ -191,6 +196,7 @@ public class StartActivity extends Activity implements GoogleMap.OnMarkerClickLi
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 5000, pendingIntent);
     }
 
+    // Methode zum Zeichnen der Markierungen
     public void drawMarkers() {
         googleMap.clear();
         markers.clear();
@@ -199,6 +205,7 @@ public class StartActivity extends Activity implements GoogleMap.OnMarkerClickLi
         }
     }
 
+    // Aktualisieren
     public void refresh(View view) {
         refresh = true;
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 400, 1, this);

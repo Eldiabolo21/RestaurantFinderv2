@@ -7,6 +7,8 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.Map;
 
+// Verwaltung der Favoriten, die lokal in einer JSON Datei gespeichert werden
+
 public class FavoriteStorage {
 
     private static final String MY_PREFS = "my_prefs";
