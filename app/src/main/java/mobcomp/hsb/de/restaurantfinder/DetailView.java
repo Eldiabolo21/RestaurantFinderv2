@@ -3,6 +3,7 @@ package mobcomp.hsb.de.restaurantfinder;
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.location.LocationManager;
@@ -25,9 +26,11 @@ public class DetailView extends Activity {
 
     private static final long MINIMUM_DISTANCECHANGE_FOR_UPDATE = 1; // in Meters
     private static final long MINIMUM_TIME_BETWEEN_UPDATE = 1000; // in Milliseconds
-    private static final long POINT_RADIUS = 100; // in Meters
+    private static final long POINT_RADIUS = 10000; // in Meters
     private static final long PROX_ALERT_EXPIRATION = -1; // It will never expire
-    private static final String PROX_ALERT_INTENT = "com.androidmyway.demo.ProximityAlert";
+
+    public static final String PROX_ALERT_INTENT = "mobcomp.hsb.de.restaurantfinder.ProxAlert";
+
     private LocationManager locationManager;
 
     @Override
@@ -38,78 +41,90 @@ public class DetailView extends Activity {
         favoriteStorage = new FavoriteStorage(getBaseContext());
 
         TextView name, url, address, city;
-        setFavoriteButton = (Button)findViewById(R.id.setFavorite);
+        setFavoriteButton = (Button) findViewById(R.id.setFavorite);
 
         Bundle b = getIntent().getExtras();
         if (b == null) {
             restaurant = (Restaurant) savedInstanceState.getSerializable("restaurant");
-        } else{
-                restaurant = (Restaurant) b.getSerializable("restaurant");
+        } else {
+            restaurant = (Restaurant) b.getSerializable("restaurant");
         }
 
-        if(favoriteStorage.isFavorite(restaurant)) {
+        if (favoriteStorage.isFavorite(restaurant)) {
             setFavoriteButton.setText(getString(R.string.remFav));
         } else {
             setFavoriteButton.setText(getString(R.string.addFav));
         }
 
-        name = (TextView)findViewById(R.id.nameText);
-        url = (TextView)findViewById(R.id.urlText);
-        address = (TextView)findViewById(R.id.addressText);
-        city = (TextView)findViewById(R.id.cityText);
+        name = (TextView) findViewById(R.id.nameText);
+        url = (TextView) findViewById(R.id.urlText);
+        address = (TextView) findViewById(R.id.addressText);
+        city = (TextView) findViewById(R.id.cityText);
 
         name.setText(restaurant.getName());
         url.setText(restaurant.getWww());
         address.setText(restaurant.getAddress());
         city.setText(restaurant.getCity());
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
     }
 
     public void setFavorite(View v) {
-        if(favoriteStorage.isFavorite(restaurant)) {
+        if (favoriteStorage.isFavorite(restaurant)) {
             favoriteStorage.remove(restaurant);
             setFavoriteButton.setText(getString(R.string.addFav));
         } else {
             favoriteStorage.add(restaurant);
             setFavoriteButton.setText(getString(R.string.remFav));
+            //TODO remove debug
             Log.d("Favorite", "Favorite");
-            Calendar cal = Calendar.getInstance();
-            cal.setTime(new Date());
-            Intent activate = new Intent(this, AlarmReceiver.class);
-            Bundle b = new Bundle();
-            b.putSerializable("restaurant", restaurant);
-            activate.putExtras(b);
-            activate.setAction("restaurant");
-            activate.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            //activate.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            AlarmManager alarms ;
-            PendingIntent alarmIntent = PendingIntent.getBroadcast(this, 0, activate, 0);
-            //resultIntent.setFlags(Intent.;
-            alarms = (AlarmManager) getSystemService(ALARM_SERVICE);
-            alarms.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis() + 10000, alarmIntent);
+            //TODO Clearup and make extra Methods
+            addAlarm();
             addProximityAlert();
         }
     }
-            //Set Proximity alert
-            private void addProximityAlert() {
-                double latitude = restaurant.getLat();
-                double longitude = restaurant.getLng();
-                Intent intent = new Intent(this, ProxReciever.class);
-                PendingIntent proximityIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
-                locationManager.addProximityAlert(
-                        latitude, // the latitude of the central point of the alert region
-                        longitude, // the longitude of the central point of the alert region
-                        POINT_RADIUS, // the radius of the central point of the alert region, in meters
-                        PROX_ALERT_EXPIRATION, // time for this proximity alert, in milliseconds, or -1 to indicate no                           expiration
-                        proximityIntent // will be used to generate an Intent to fire when entry to or exit from the alert region is detected
-                );
 
-                IntentFilter filter = new IntentFilter(PROX_ALERT_INTENT);
-                registerReceiver(new ProxReciever(), filter);
-                //TODO Remoce debug!
-                Toast.makeText(getApplicationContext(), "Alert Added", Toast.LENGTH_SHORT).show();
-            }
+    /**
+     *
+     */
+    //FIXME can't call Detailview, end up a start acvitity when click on Notification
+    private void addAlarm(){
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(new Date());
+        Intent activate = new Intent(this, AlarmReceiver.class);
+        Bundle b = new Bundle();
+        b.putSerializable("restaurant", restaurant);
+        activate.putExtras(b);
+        activate.setAction("restaurant");
+        activate.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        //activate.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        AlarmManager alarms ;
+        PendingIntent alarmIntent = PendingIntent.getBroadcast(this, 0, activate, 0);
+        alarms = (AlarmManager) getSystemService(ALARM_SERVICE);
+        alarms.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis() + 10000, alarmIntent);
+    }
 
+    /**
+     *  Set Proximity alert
+     */
+    private void addProximityAlert() {
+        double latitude = restaurant.getLat();
+        double longitude = restaurant.getLng();
+        Intent intent = new Intent(PROX_ALERT_INTENT);
+        PendingIntent proximityIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
+        locationManager.addProximityAlert(
+                latitude, // the latitude of the central point of the alert region
+                longitude, // the longitude of the central point of the alert region
+                POINT_RADIUS, // the radius of the central point of the alert region, in meters
+                PROX_ALERT_EXPIRATION, // time for this proximity alert, in milliseconds, or -1 to indicate no                           expiration
+                proximityIntent // will be used to generate an Intent to fire when entry to or exit from the alert region is detected
+        );
 
+        IntentFilter filter = new IntentFilter(PROX_ALERT_INTENT);
+        Intent i = registerReceiver(new ProxReciever(), filter);
+        registerReceiver(new ProxReciever(), filter);
+        //TODO Remove debug!
+        Toast.makeText(getApplicationContext(), "Alert Added", Toast.LENGTH_SHORT).show();
+    }
 
     public void showRoute(View v) {
         Intent result = new Intent();

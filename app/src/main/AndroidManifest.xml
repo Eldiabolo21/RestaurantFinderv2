@@ -44,6 +44,11 @@
         <service android:enabled="true" android:name=".BGService" />
 
         <receiver android:name=".AlarmReceiver"/>
+        <!--<receiver android:name=".ProxReciever">
+            <intent-filter>
+                <action android:name="mobcomp.hsb.de.restaurantfinder.PROX_ALERT_INTENT" />
+            </intent-filter>
+        </receiver>-->
     </application>
 
 </manifest>

@@ -18,6 +18,7 @@ public class ProxReciever extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
+        Log.d("bla", "sind beim onReceive");
         String key = LocationManager.KEY_PROXIMITY_ENTERING;
         Boolean entering = intent.getBooleanExtra(key, false);
         if (entering) {
@@ -30,7 +31,6 @@ public class ProxReciever extends BroadcastReceiver {
         Intent notificationIntent = new Intent(context, StartActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, notificationIntent, 0);
         Notification notification = createNotification();
-        //notification.setLatestEventInfo(context, "Proximity Alert!", "You are near your point of interest.", pendingIntent);
         notificationManager.notify(NOTIFICATION_ID, notification);
     }
 

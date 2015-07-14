@@ -25,13 +25,14 @@ public class AlarmReceiver extends BroadcastReceiver {
         // builder.setSound(alarmSound);
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(context)
-                        .setSmallIcon(R.drawable.ic_launcher)
+                        .setSmallIcon(R.drawable.logo)
                         .setContentTitle("It's been 30 days!")
                         .setContentText("Hey, don't you want to go to " + r.getName() + " at " + r.getAddress() + " that you favoured 30 days ago ? ")
                         .setSound(alarmSound)
-                        .setVibrate(vibPattern);
+                        .setVibrate(vibPattern)
+                        .setAutoCancel(true);
         //Intent i = Intent.getIntent();
-        Intent resultIntent = new Intent(context, DetailView.class);
+        Intent resultIntent = new Intent(context, StartActivity.class);
         resultIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
