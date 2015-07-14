@@ -1,7 +1,7 @@
 RestaurantFinder
 ================
 
-MobAppDev Projekt: Brüning, Feichtl
+MobComp Brüning, Clauss, Meyer
 
 Features:
 ===============
@@ -9,6 +9,7 @@ Features:
 - Restaurants in der Nähe anzeigen lassen
 - Favoriten speichern/löschen
 - Route zu Restaurant berechnen
+- Notifications nach 30 Tagen, wenn favorisiert
 
 Unterstützte Android Version: ab 4.1
 
