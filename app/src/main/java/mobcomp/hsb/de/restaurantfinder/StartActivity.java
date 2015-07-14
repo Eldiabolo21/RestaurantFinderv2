@@ -76,7 +76,7 @@ public class StartActivity extends Activity implements GoogleMap.OnMarkerClickLi
             Toast.makeText(getBaseContext(), "Location can't be retrieved", Toast.LENGTH_SHORT).show();
     }
 
-    // erstellt die MapView
+    //creates MapView
     private void createMapView() {
         try {
             if (null == googleMap) {
@@ -100,7 +100,7 @@ public class StartActivity extends Activity implements GoogleMap.OnMarkerClickLi
         request.execute("https://api.foursquare.com/v2/venues/search?ll=" + latLng.latitude + "," + latLng.longitude + "&query=restaurant&oauth_token=NLHPJPLVI4UB2RZMEKV3D34NVLDHOIUUAUUTLR3UDKM1HQPM&v=20141203");
     }
 
-    // zeichnet die Route zwischen der akutellen Position und dem gewaehlten Restaurant
+    //draws Route bewtween current Position and selected restaurant
     public void drawRoute(LatLng position) {
         googleMap.clear();
 
@@ -119,7 +119,7 @@ public class StartActivity extends Activity implements GoogleMap.OnMarkerClickLi
         googleMap.addMarker(new MarkerOptions().position(position).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
     }
 
-    // oeffnet die Detailview eines Restaurants, bei Klick
+    //opens Detailview on Click ob Marker
     @Override
     public boolean onMarkerClick(final Marker marker) {
         for (Restaurant r : restaurantList) {
@@ -138,7 +138,7 @@ public class StartActivity extends Activity implements GoogleMap.OnMarkerClickLi
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(resultCode == 1) {
+        if (resultCode == 1) {
             drawRoute(new LatLng(currentRestaurant.getLat(), currentRestaurant.getLng()));
         }
     }

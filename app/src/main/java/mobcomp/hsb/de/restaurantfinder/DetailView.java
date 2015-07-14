@@ -96,7 +96,6 @@ public class DetailView extends Activity {
         activate.putExtras(b);
         activate.setAction("restaurant");
         activate.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        //activate.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         AlarmManager alarms ;
         PendingIntent alarmIntent = PendingIntent.getBroadcast(this, 0, activate, 0);
         alarms = (AlarmManager) getSystemService(ALARM_SERVICE);
