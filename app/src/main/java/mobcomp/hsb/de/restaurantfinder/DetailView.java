@@ -33,6 +33,7 @@ public class DetailView extends Activity {
 
     private LocationManager locationManager;
 
+    // erstellt die Detailview und fuellt die Felder/Bereiche mit den Inhalten, die dahin gehoeren
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,6 +69,7 @@ public class DetailView extends Activity {
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
     }
 
+    // Methode, die ein Restaurant zu den Favoriten hinzufuegt oder entfernt, falls es schon vorhanden ist
     public void setFavorite(View v) {
         if (favoriteStorage.isFavorite(restaurant)) {
             favoriteStorage.remove(restaurant);
@@ -75,10 +77,10 @@ public class DetailView extends Activity {
         } else {
             favoriteStorage.add(restaurant);
             setFavoriteButton.setText(getString(R.string.remFav));
-            //TODO remove debug
             Log.d("Favorite", "Favorite");
-            //TODO Clearup and make extra Methods
+            // fuegt eine Notification Timer hinzu, der sich nach 30 Tagen meldet
             addAlarm();
+            // fuegt einen NotificationAlert hinzu, welche sich meldet, wenn man das naechste mal in Reichweite des Restaurants ist
             addProximityAlert();
         }
     }

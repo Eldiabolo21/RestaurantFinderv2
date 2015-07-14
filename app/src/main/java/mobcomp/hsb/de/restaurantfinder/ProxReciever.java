@@ -10,9 +10,7 @@ import android.graphics.Color;
 import android.location.LocationManager;
 import android.util.Log;
 
-/**
- * Created by fabian on 14.07.15.
- */
+
 public class ProxReciever extends BroadcastReceiver {
     private static final int NOTIFICATION_ID = 1000;
 

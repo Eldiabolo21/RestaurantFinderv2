@@ -10,9 +10,7 @@ import android.media.RingtoneManager;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 
-/**
- * Created by fabian on 08.07.15.
- */
+
 public class AlarmReceiver extends BroadcastReceiver {
 
     @Override

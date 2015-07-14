@@ -179,7 +179,7 @@ public class StartActivity extends Activity implements GoogleMap.OnMarkerClickLi
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 400, 1, this);
     }
 
-
+    // Methode die fuer ein restaurant einen marker erstellt, mit den werten position, titel und icon
     private void addMarker(Restaurant restaurant) {
         if (googleMap != null) {
             markers.put(restaurant.getId(),
