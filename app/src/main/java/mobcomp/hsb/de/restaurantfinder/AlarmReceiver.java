@@ -7,7 +7,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.media.RingtoneManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 
@@ -20,15 +19,13 @@ public class AlarmReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         Bundle b = intent.getExtras();
         Restaurant r = (Restaurant) b.getSerializable("restaurant");
-        Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         long[] vibPattern = { 0, 200, 0, 300 };
-        // builder.setSound(alarmSound);
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(context)
                         .setSmallIcon(R.drawable.logo)
                         .setContentTitle("It's been 30 days!")
                         .setContentText("Hey, don't you want to go to " + r.getName() + " at " + r.getAddress() + " that you favoured 30 days ago ? ")
-                        .setSound(alarmSound)
+                        .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
                         .setVibrate(vibPattern)
                         .setAutoCancel(true);
         //Intent i = Intent.getIntent();

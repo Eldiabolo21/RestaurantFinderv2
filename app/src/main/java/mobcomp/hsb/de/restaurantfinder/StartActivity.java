@@ -2,9 +2,7 @@ package mobcomp.hsb.de.restaurantfinder;
 
 import android.app.Activity;
 import android.app.AlarmManager;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -13,7 +11,6 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.StrictMode;
-import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -50,7 +47,6 @@ public class StartActivity extends Activity implements GoogleMap.OnMarkerClickLi
     boolean refresh, favoritesActive;
     FavoriteStorage favoriteStorage;
     LatLng currentPosition;
-    //Testcomment :)
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +58,6 @@ public class StartActivity extends Activity implements GoogleMap.OnMarkerClickLi
         refresh = true;
         favoritesActive = false;
         favoriteStorage = new FavoriteStorage(getBaseContext());
-
 
         // Enables Internet tasks in the main thread
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -79,7 +74,6 @@ public class StartActivity extends Activity implements GoogleMap.OnMarkerClickLi
             onLocationChanged(location);
         else
             Toast.makeText(getBaseContext(), "Location can't be retrieved", Toast.LENGTH_SHORT).show();
-        startService(new Intent(this, BGService.class));
     }
 
     // erstellt die MapView
@@ -152,32 +146,6 @@ public class StartActivity extends Activity implements GoogleMap.OnMarkerClickLi
     // zeigt alle favorisierten Restaurants auf der Map
     public void showFavorites(View view) {
         Button typeButton = (Button) findViewById(R.id.btnFav);
-        //new Notification
-/*        NotificationCompat.Builder mBuilder =
-                new NotificationCompat.Builder(this)
-                        .setSmallIcon(R.drawable.common_signin_btn_icon_dark)
-                        .setContentTitle("My notification")
-                        .setContentText("Hello World!");
-
-*//*        Intent resultIntent = new Intent(this, ResultActivity.class);
-        // Because clicking the notification opens a new ("special") activity, there's
-        // no need to create an artificial back stack.
-        PendingIntent resultPendingIntent =
-                PendingIntent.getActivity(
-                        this,
-                        0,
-                        resultIntent,
-                        PendingIntent.FLAG_UPDATE_CURRENT
-                );*//*
-        //NotificationCompat.Builder mBuilder;
-        // Sets an ID for the notification
-        //int mNotificationId = 001;
-        // Gets an instance of the NotificationManager service
-        NotificationManager mNotifyMgr =
-                (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        // Builds the notification and issues it.
-        mNotifyMgr.notify(mNotificationId, mBuilder.build());*/
-
         if (favoritesActive) {
             restaurantList = nearRestaurants;
             typeButton.setText("F");
